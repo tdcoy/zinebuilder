@@ -55,7 +55,7 @@ function createPageElement() {
 
   //Page Image
   const newImg = document.createElement("img");
-  newImg.src = "images/pic01.jpg"; // You can set a default source or leave it empty
+  newImg.src = "./images/pic01.jpg"; // You can set a default source or leave it empty
   newImg.alt = "";
   newImg.className = "draggable";
   newImg.setAttribute("draggable", true);
