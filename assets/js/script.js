@@ -4,8 +4,11 @@ const readOrderButton = document.getElementById("read-order-button");
 const printOrderButton = document.getElementById("print-order-button");
 
 const draggables = [];
-const containers = [];
+const pageContainers = [];
+const pageBoxes = [];
 const pageNumbers = [];
+
+let readOrder = true;
 
 let pageCount = 0;
 let fromSlot,
@@ -13,24 +16,46 @@ let fromSlot,
 
 createSheetButton.addEventListener("click", () => {
   for (let index = 0; index < 4; index++) {
-    createImageElement();
+    createPageElement();
   }
 });
 
-function createImageElement() {
+readOrderButton.addEventListener("click", () => {
+  if (readOrder == false) {
+    putInReadOrder();
+    readOrder = true;
+  }
+});
+
+printOrderButton.addEventListener("click", () => {
+  if (readOrder == true) {
+    const printSortedPageBoxes = putInPrintOrder(pageBoxes.slice()); // Make a copy to preserve the original array
+
+    for (const child of imageContainer.children) {
+      console.log(child);
+    }
+
+    readOrder = false;
+    console.log(pageBoxes);
+    console.log(printSortedPageBoxes);
+  }
+});
+
+function createPageElement() {
   //Page Container
   const pageContainer = document.createElement("div");
-  pageContainer.classList.add("page-container");
+  pageContainer.classList.add("page-container-" + pageCount);
+  pageContainers.push(pageContainer);
 
   //Page Box
   const pageBox = document.createElement("div");
   pageBox.classList.add("page-box");
   pageBox.classList.add("page-" + pageCount);
-  containers.push(pageBox);
+  pageBoxes.push(pageBox);
 
   //Page Image
   const newImg = document.createElement("img");
-  newImg.src = "./assets/images/defaultImage_01.png"; // You can set a default source or leave it empty
+  newImg.src = "images/pic01.jpg"; // You can set a default source or leave it empty
   newImg.alt = "";
   newImg.className = "draggable";
   newImg.setAttribute("draggable", true);
@@ -43,13 +68,6 @@ function createImageElement() {
   //Page Number
   const pageNum = document.createElement("p");
   pageNum.classList.add("page-number");
-
-  /* if (pageCount == 0) {
-    pageNum.innerHTML = "front cover";
-  }
-  if (pageCount > 0) {
-    pageNum.innerHTML = "page " + pageCount;
-  } */
   pageNumbers.push(pageNum);
 
   pageBox.appendChild(newImg);
@@ -101,8 +119,6 @@ function updateDraggables() {
     draggable.addEventListener("dragstart", () => {
       draggable.classList.add("dragging");
       fromSlot = draggable.parentNode;
-
-      console.log(fromSlot);
     });
 
     draggable.addEventListener("dragend", () => {
@@ -118,7 +134,7 @@ function updateDraggables() {
     });
   });
 
-  containers.forEach((container) => {
+  pageBoxes.forEach((container) => {
     container.addEventListener("dragover", (e) => {
       //Allows for dropping inside of elements
       e.preventDefault();
@@ -128,4 +144,65 @@ function updateDraggables() {
       container.appendChild(draggable);
     });
   });
+}
+
+function putInReadOrder() {}
+
+function putInPrintOrder(pages) {
+  // Sort the pages based on the order for duplex printing
+  const numPages = pages.length;
+
+  let evenNums = [];
+  let oddNums = [];
+  let sortedEvenNums = [];
+  let sortedOddNums = [];
+  let sortedPages = [];
+
+  for (let index = 0; index < numPages; index++) {
+    //if the index is even
+    if (index % 2 == 0) {
+      evenNums.push(pages[index]);
+    }
+    //if the index is odd
+    else {
+      oddNums.push(pages[index]);
+    }
+  }
+
+  oddNums.reverse();
+
+  let left = 0;
+  let right = evenNums.length - 1;
+
+  for (let index = 0; index < evenNums.length; index++) {
+    //if the index is even
+    if (index % 2 == 0) {
+      sortedEvenNums.push(evenNums[left]);
+      sortedOddNums.push(oddNums[left]);
+      left++;
+    }
+    //if the index is odd
+    else {
+      sortedEvenNums.push(evenNums[right]);
+      sortedOddNums.push(oddNums[right]);
+      right--;
+    }
+  }
+  let oddIndex = 0;
+  let evenIndex = 0;
+
+  for (let index = 0; index < numPages; index++) {
+    //if the index is even
+    if (index % 2 == 0) {
+      sortedPages.push(sortedOddNums[oddIndex]);
+      oddIndex++;
+    }
+    //if the index is odd
+    else {
+      sortedPages.push(sortedEvenNums[evenIndex]);
+      evenIndex++;
+    }
+  }
+
+  return sortedPages;
 }

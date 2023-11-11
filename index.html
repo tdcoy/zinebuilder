@@ -1,36 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./assets/css/main.css" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Zine Builder</title>
-    <link rel="stylesheet" href="./assets/css/main.css" />
+    <title>Zine</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
   </head>
-  <body>
-    <header>
-      <h1 class="header">Zine Builder</h1>
-    </header>
-    <div class="container">
-      <div class="pages-container" id="imageContainer">
-        <div class="create-sheet">
-          <button class="create-button" id="create-sheet-button">
-            Create Sheet
-          </button>
-          <button class="create-button" id="read-order-button">
-            Read Order
-          </button>
-          <button class="create-button" id="print-order-button">
-            Print Order
-          </button>
-          <button class="create-button" id="save-to-pdf-button">
-            Save To PDF
-          </button>
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <!-- Banner -->
+          <section id="banner">
+            <div class="content">
+              <header>
+                <h1>Zine Builder</h1>
+              </header>
+              <p>
+                Create a sheet and add images to see how your zine could look.
+                The Print Order button will change the view to print view, and
+                vise versa for Read Order. When you are happy with how your zine
+                looks you can print it to pdf with the Print to PDF button.
+              </p>
+              <ul class="actions">
+                <li>
+                  <button class="button big" id="create-sheet-button">
+                    Create Sheet
+                  </button>
+                </li>
+                <li>
+                  <button class="button big" id="read-order-button">
+                    Read Order
+                  </button>
+                </li>
+                <li>
+                  <button class="button big" id="print-order-button">
+                    Print Order
+                  </button>
+                </li>
+                <li>
+                  <button class="button big" id="save-to-pdf-button">
+                    Save To PDF
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Pages -->
+          <section>
+            <div class="pages-container" id="imageContainer"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div id="sidebar">
+        <div class="inner">
+          <!-- Menu -->
+          <nav id="menu">
+            <header class="major"></header>
+            <ul>
+              <li><a href="index.html">Homepage</a></li>
+              <li><a href="generic.html">Generic</a></li>
+              <li><a href="elements.html">Elements</a></li>
+              <li>
+                <span class="opener">Submenu</span>
+                <ul>
+                  <li><a href="#">Lorem Dolor</a></li>
+                  <li><a href="#">Ipsum Adipiscing</a></li>
+                  <li><a href="#">Tempus Magna</a></li>
+                  <li><a href="#">Feugiat Veroeros</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Footer -->
+          <footer id="footer"></footer>
         </div>
       </div>
     </div>
-  </body>
 
-  <script src="./assets/js/script.js"></script>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
 </html>
