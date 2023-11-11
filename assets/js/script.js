@@ -23,25 +23,17 @@ createSheetButton.addEventListener("click", () => {
 readOrderButton.addEventListener("click", () => {
   if (readOrder == false) {
     putInReadOrder();
-    readOrder = true;
   }
 });
 
 printOrderButton.addEventListener("click", () => {
   if (readOrder == true) {
-    const printSortedPageBoxes = putInPrintOrder(pageBoxes.slice()); // Make a copy to preserve the original array
-
-    for (const child of imageContainer.children) {
-      console.log(child);
-    }
-
-    readOrder = false;
-    console.log(pageBoxes);
-    console.log(printSortedPageBoxes);
+    putInPrintOrder();
   }
 });
 
 function createPageElement() {
+  //readOrder = true;
   //Page Container
   const pageContainer = document.createElement("div");
   pageContainer.classList.add("page-container-" + pageCount);
@@ -77,6 +69,7 @@ function createPageElement() {
 
   updateDraggables();
   updatePageNumbers();
+  //updatePagePosition();
   pageCount++;
 }
 
@@ -146,9 +139,26 @@ function updateDraggables() {
   });
 }
 
-function putInReadOrder() {}
+function putInReadOrder() {
+  readOrder = true;
+}
 
-function putInPrintOrder(pages) {
+function putInPrintOrder() {
+  const printSortedPageBoxes = sortByPrintOrder(pageContainers.slice()); // Make a copy to preserve the original array
+
+  const childCount = imageContainer.childElementCount;
+
+  for (let index = 0; index < childCount; index++) {
+    imageContainer.removeChild(imageContainer.children[0]);
+  }
+
+  for (let index = 0; index < childCount; index++) {
+    imageContainer.appendChild(printSortedPageBoxes[index]);
+  }
+  readOrder = false;
+}
+
+function sortByPrintOrder(pages) {
   // Sort the pages based on the order for duplex printing
   const numPages = pages.length;
 
@@ -205,4 +215,10 @@ function putInPrintOrder(pages) {
   }
 
   return sortedPages;
+}
+
+function updatePagePosition() {
+  if (readOrder == true) {
+    putInPrintOrder();
+  }
 }
