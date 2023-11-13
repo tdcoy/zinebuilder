@@ -2,6 +2,8 @@ const imageContainer = document.getElementById("imageContainer");
 const createSheetButton = document.getElementById("create-sheet-button");
 const readOrderButton = document.getElementById("read-order-button");
 const printOrderButton = document.getElementById("print-order-button");
+const printToPdfButton = document.getElementById("print-to-pdf-button");
+const deleteSheetButton = document.getElementById("delete-sheet-button");
 
 const draggables = [];
 const pageContainers = [];
@@ -18,6 +20,22 @@ createSheetButton.addEventListener("click", () => {
   for (let index = 0; index < 4; index++) {
     createPageElement();
   }
+  updatePagePosition();
+});
+
+deleteSheetButton.addEventListener("click", () => {
+  for (let index = 0; index < 4; index++) {
+    imageContainer.removeChild(
+      imageContainer.children[imageContainer.childElementCount - 1]
+    );
+    pageContainers.pop(pageContainers.length - 1);
+    pageBoxes.pop(pageBoxes.length - 1);
+    pageNumbers.pop(pageNumbers.length - 1);
+    draggables.pop(draggables.length - 1);
+  }
+
+  updatePageNumbers();
+  updatePagePosition();
 });
 
 readOrderButton.addEventListener("click", () => {
@@ -32,8 +50,18 @@ printOrderButton.addEventListener("click", () => {
   }
 });
 
+printToPdfButton.addEventListener("click", () => {
+  //Loop through page containers and get all images
+  const images = [];
+  const printSortedPageBoxes = sortByPrintOrder(pageBoxes.slice()); // Make a copy to preserve the original array
+  for (let index = 0; index < printSortedPageBoxes.length; index++) {
+    images.push(printSortedPageBoxes[index].getElementsByTagName("img")[0].src);
+  }
+
+  console.log(images);
+});
+
 function createPageElement() {
-  //readOrder = true;
   //Page Container
   const pageContainer = document.createElement("div");
   pageContainer.classList.add("page-container-" + pageCount);
@@ -69,7 +97,6 @@ function createPageElement() {
 
   updateDraggables();
   updatePageNumbers();
-  //updatePagePosition();
   pageCount++;
 }
 
@@ -140,11 +167,21 @@ function updateDraggables() {
 }
 
 function putInReadOrder() {
+  const childCount = imageContainer.childElementCount;
+
+  for (let index = 0; index < childCount; index++) {
+    imageContainer.removeChild(imageContainer.children[0]);
+  }
+
+  for (let index = 0; index < childCount; index++) {
+    imageContainer.appendChild(pageContainers[index]);
+  }
+
   readOrder = true;
 }
 
 function putInPrintOrder() {
-  const printSortedPageBoxes = sortByPrintOrder(pageContainers.slice()); // Make a copy to preserve the original array
+  const printSortedPageBoxes = sortByPrintOrder(pageContainers); // Make a copy to preserve the original array
 
   const childCount = imageContainer.childElementCount;
 
@@ -218,7 +255,7 @@ function sortByPrintOrder(pages) {
 }
 
 function updatePagePosition() {
-  if (readOrder == true) {
+  if (readOrder == false) {
     putInPrintOrder();
   }
 }
