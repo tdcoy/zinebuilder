@@ -3072,7 +3072,6 @@ button:disabled,
 }
 
 #menu > ul > li {
-  border-top: solid 1px rgba(210, 215, 217, 0.75);
   margin: 0.5em 0 0 0;
   padding: 0.5em 0 0 0;
 }
@@ -3125,4 +3124,12 @@ button:disabled,
   height: 255px;
   cursor: move;
   display: block;
+}
+
+.result-container {
+  width: 825px;
+  height: 637px;
+  display: block;
+  margin: 5px;
+  border: 2px dashed;
 }

@@ -27,10 +27,21 @@
                 <h1>Zine Builder</h1>
               </header>
               <p>
-                Create a sheet and add images to see how your zine could look.
-                The Print Order button will change the view to print view, and
-                vise versa for Read Order. When you are happy with how your zine
-                looks you can print it to pdf with the Print to PDF button.
+                To start, click the "Add Sheet" to create a new sheet and click
+                a page to add images. The pages and be dragged around to be
+                rearraged.
+                <br /><br />
+                The "Print Order" button will arrange the sheets into print
+                view, and vise versa for the "Read Order" button. When you are
+                happy with how your zine looks the "Print to PDF" button will
+                combine your pages into a single pdf ready to be printed in
+                print order.
+                <br /><br />
+                For this format of zine to work, pages will only be in multiples
+                of 4. So if you need some filler, add a puzzle or something,
+                people love puzzles. I recommend sizing each of your pages when
+                making them to be 1650px wide by 2550px tall so when combined it will be
+                the correct resolution for 11" x 8.5" sheets.
               </p>
               <ul class="actions">
                 <li>
@@ -55,7 +66,7 @@
                 </li>
                 <li>
                   <button class="button big" id="print-to-pdf-button">
-                    Save To PDF
+                    Print To PDF
                   </button>
                 </li>
               </ul>
@@ -65,6 +76,13 @@
           <!-- Pages -->
           <section>
             <div class="pages-container" id="imageContainer"></div>
+          </section>
+
+          <section>
+            <div>
+              <h2>Preview Zine:</h2>
+              <canvas class="result-container" id="result"></canvas>
+            </div>
           </section>
         </div>
       </div>
@@ -76,18 +94,7 @@
           <nav id="menu">
             <header class="major"></header>
             <ul>
-              <li><a href="./index.html">Homepage</a></li>
-              <li><a href="./generic.html">Generic</a></li>
-              <li><a href="./elements.html">Elements</a></li>
-              <li>
-                <span class="opener">Submenu</span>
-                <ul>
-                  <li><a href="#">Lorem Dolor</a></li>
-                  <li><a href="#">Ipsum Adipiscing</a></li>
-                  <li><a href="#">Tempus Magna</a></li>
-                  <li><a href="#">Feugiat Veroeros</a></li>
-                </ul>
-              </li>
+              <li><a href="./about.html">About</a></li>
             </ul>
           </nav>
 

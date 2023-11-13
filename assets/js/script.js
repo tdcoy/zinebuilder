@@ -10,6 +10,9 @@ const pageContainers = [];
 const pageBoxes = [];
 const pageNumbers = [];
 
+const pageWidth = 1650;
+const pageHeight = 2550;
+
 let readOrder = true;
 
 let pageCount = 0;
@@ -17,10 +20,7 @@ let fromSlot,
   toSlot = null;
 
 createSheetButton.addEventListener("click", () => {
-  for (let index = 0; index < 4; index++) {
-    createPageElement();
-  }
-  updatePagePosition();
+  createSheet();
 });
 
 deleteSheetButton.addEventListener("click", () => {
@@ -32,6 +32,7 @@ deleteSheetButton.addEventListener("click", () => {
     pageBoxes.pop(pageBoxes.length - 1);
     pageNumbers.pop(pageNumbers.length - 1);
     draggables.pop(draggables.length - 1);
+    pageCount--;
   }
 
   updatePageNumbers();
@@ -51,15 +52,20 @@ printOrderButton.addEventListener("click", () => {
 });
 
 printToPdfButton.addEventListener("click", () => {
-  //Loop through page containers and get all images
-  const images = [];
-  const printSortedPageBoxes = sortByPrintOrder(pageBoxes.slice()); // Make a copy to preserve the original array
-  for (let index = 0; index < printSortedPageBoxes.length; index++) {
-    images.push(printSortedPageBoxes[index].getElementsByTagName("img")[0].src);
+  if (pageCount > 0) {
+    createResultPage();
+  }
+});
+
+function createSheet() {
+  // Loop to create page elements
+  for (let index = 0; index < 4; index++) {
+    createPageElement();
   }
 
-  console.log(images);
-});
+  updatePagePosition();
+  createResultPage();
+}
 
 function createPageElement() {
   //Page Container
@@ -255,7 +261,48 @@ function sortByPrintOrder(pages) {
 }
 
 function updatePagePosition() {
+  console.log("updatePageNumbers");
+
   if (readOrder == false) {
     putInPrintOrder();
   }
+}
+
+function createResultPage() {
+  //Loop through page containers and get all images
+  let oddPages = [];
+  let evenPages = [];
+
+  let combinedImage = document.getElementById("result");
+
+  const printSortedPageBoxes = sortByPrintOrder(pageBoxes.slice()); // Make a copy to preserve the original array
+  
+  for (let index = 0; index < printSortedPageBoxes.length; index++) {
+    //Even pages
+    if (index % 2 == 0) {
+      evenPages.push(
+        printSortedPageBoxes[index].getElementsByTagName("img")[0]
+      );
+    }
+
+    //Odd pages
+    else {
+      let image = printSortedPageBoxes[index].getElementsByTagName("img")[0];
+      oddPages.push(image);
+    }
+  }
+  combinedImage.width = pageWidth / 2;
+  combinedImage.height = pageHeight / 4;
+
+  var context = combinedImage.getContext("2d");
+  context.globalAlpha = 1.0;
+  context.drawImage(evenPages[0], 0, 0, pageWidth / 4, pageHeight / 4);
+  context.globalAlpha = 1.0;
+  context.drawImage(
+    oddPages[0],
+    pageWidth / 4,
+    0,
+    pageWidth / 4,
+    pageHeight / 4
+  );
 }
