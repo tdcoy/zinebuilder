@@ -2,7 +2,7 @@ const imageContainer = document.getElementById("imageContainer");
 const createSheetButton = document.getElementById("create-sheet-button");
 const readOrderButton = document.getElementById("read-order-button");
 const printOrderButton = document.getElementById("print-order-button");
-const printToPdfButton = document.getElementById("print-to-pdf-button");
+//const printToPdfButton = document.getElementById("print-to-pdf-button");
 const deleteSheetButton = document.getElementById("delete-sheet-button");
 const leftPagePreview = document.getElementById("left-preview");
 const rightPagePreview = document.getElementById("right-preview");
@@ -56,11 +56,11 @@ printOrderButton.addEventListener("click", () => {
   }
 });
 
-printToPdfButton.addEventListener("click", () => {
+/* printToPdfButton.addEventListener("click", () => {
   if (pageCount > 0) {
     //createResultPage();
   }
-});
+}); */
 
 leftPagePreview.addEventListener("click", () => {
   //turn page left
