@@ -32,16 +32,16 @@
                 rearraged.
                 <br /><br />
                 The "Print Order" button will arrange the sheets into print
-                view, and vise versa for the "Read Order" button. When you are
+                view, and vise versa for the "Read Order" button. <!-- When you are
                 happy with how your zine looks the "Print to PDF" button will
                 combine your pages into a single pdf ready to be printed in
-                print order.
+                print order. -->
                 <br /><br />
                 For this format of zine to work, pages will only be in multiples
                 of 4. So if you need some filler, add a puzzle or something,
                 people love puzzles. I recommend sizing each of your pages when
-                making them to be 1650px wide by 2550px tall so when combined it will be
-                the correct resolution for 11" x 8.5" sheets.
+                making them to be 1650px wide by 2550px tall so when combined it
+                will be the correct resolution for 11" x 8.5" sheets.
               </p>
               <ul class="actions">
                 <li>
@@ -64,11 +64,11 @@
                     Print Order
                   </button>
                 </li>
-                <li>
+                <!-- <li>
                   <button class="button big" id="print-to-pdf-button">
                     Print To PDF
                   </button>
-                </li>
+                </li> -->
               </ul>
             </div>
           </section>
@@ -81,7 +81,25 @@
           <section>
             <div>
               <h2>Preview Zine:</h2>
-              <canvas class="result-container" id="result"></canvas>
+              <div class="preview-container" id="preview">
+                <div class="preview-page">
+                  <img
+                    id="left-preview"
+                    src="./images/blank.jpg"
+                    width="828"
+                    height="1121px"
+                  />
+                </div>
+                <div class="preview-page">
+                  <img
+                    id="right-preview"
+                    src="./images/blank.jpg"
+                    width="828"
+                    height="1121px"
+                  />
+                </div>
+              </div>
+              <!-- <canvas class="result-container" id="result"></canvas> -->
             </div>
           </section>
         </div>

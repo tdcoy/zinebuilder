@@ -4,11 +4,14 @@ const readOrderButton = document.getElementById("read-order-button");
 const printOrderButton = document.getElementById("print-order-button");
 const printToPdfButton = document.getElementById("print-to-pdf-button");
 const deleteSheetButton = document.getElementById("delete-sheet-button");
+const leftPagePreview = document.getElementById("left-preview");
+const rightPagePreview = document.getElementById("right-preview");
 
 const draggables = [];
 const pageContainers = [];
 const pageBoxes = [];
 const pageNumbers = [];
+const resultSheets = [];
 
 const pageWidth = 1650;
 const pageHeight = 2550;
@@ -16,6 +19,7 @@ const pageHeight = 2550;
 let readOrder = true;
 
 let pageCount = 0;
+let currentSheetNumber = 0;
 let fromSlot,
   toSlot = null;
 
@@ -37,6 +41,7 @@ deleteSheetButton.addEventListener("click", () => {
 
   updatePageNumbers();
   updatePagePosition();
+  updatePreview();
 });
 
 readOrderButton.addEventListener("click", () => {
@@ -53,7 +58,23 @@ printOrderButton.addEventListener("click", () => {
 
 printToPdfButton.addEventListener("click", () => {
   if (pageCount > 0) {
-    createResultPage();
+    //createResultPage();
+  }
+});
+
+leftPagePreview.addEventListener("click", () => {
+  //turn page left
+  if (currentSheetNumber > 0) {
+    currentSheetNumber--;
+    updatePreview();
+  }
+});
+
+rightPagePreview.addEventListener("click", () => {
+  //turn page right
+  if (currentSheetNumber * 2 < pageCount) {
+    currentSheetNumber++;
+    updatePreview();
   }
 });
 
@@ -64,7 +85,8 @@ function createSheet() {
   }
 
   updatePagePosition();
-  createResultPage();
+  //createResultPage();
+  updatePreview();
 }
 
 function createPageElement() {
@@ -120,6 +142,7 @@ function changeImage(img) {
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
+      updatePreview();
     }
   });
 
@@ -261,10 +284,47 @@ function sortByPrintOrder(pages) {
 }
 
 function updatePagePosition() {
-  console.log("updatePageNumbers");
-
   if (readOrder == false) {
     putInPrintOrder();
+  }
+}
+
+function updatePreview() {
+  //Nothing to display
+  if (pageCount == 0) {
+    console.log("empty preveiw");
+    //show empty preview
+    leftPagePreview.src = "./images/blank.jpg";
+    rightPagePreview.src = "./images/blank.jpg";
+  }
+  //If user was on a sheet that got removed, reset preview
+  else if (currentSheetNumber * 2 > pageCount) {
+    currentSheetNumber = 0;
+    leftPagePreview.src = "./images/blank.jpg";
+    rightPagePreview.src = pageBoxes[0].getElementsByTagName("img")[0].src;
+  }
+  //display current page
+  else {
+    //front cover
+    if (currentSheetNumber == 0) {
+      leftPagePreview.src = "./images/blank.jpg";
+      rightPagePreview.src = pageBoxes[0].getElementsByTagName("img")[0].src;
+    }
+    //back cover
+    else if (currentSheetNumber == pageCount / 2) {
+      leftPagePreview.src =
+        pageBoxes[pageCount - 1].getElementsByTagName("img")[0].src;
+      rightPagePreview.src = "./images/blank.jpg";
+    }
+    //normal sheet
+    else {
+      leftPagePreview.src =
+        pageBoxes[currentSheetNumber * 2 - 1].getElementsByTagName(
+          "img"
+        )[0].src;
+      rightPagePreview.src =
+        pageBoxes[currentSheetNumber * 2].getElementsByTagName("img")[0].src;
+    }
   }
 }
 
@@ -276,7 +336,7 @@ function createResultPage() {
   let combinedImage = document.getElementById("result");
 
   const printSortedPageBoxes = sortByPrintOrder(pageBoxes.slice()); // Make a copy to preserve the original array
-  
+
   for (let index = 0; index < printSortedPageBoxes.length; index++) {
     //Even pages
     if (index % 2 == 0) {
@@ -287,8 +347,7 @@ function createResultPage() {
 
     //Odd pages
     else {
-      let image = printSortedPageBoxes[index].getElementsByTagName("img")[0];
-      oddPages.push(image);
+      oddPages.push(printSortedPageBoxes[index].getElementsByTagName("img")[0]);
     }
   }
   combinedImage.width = pageWidth / 2;

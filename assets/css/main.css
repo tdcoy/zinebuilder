@@ -3127,9 +3127,22 @@ button:disabled,
 }
 
 .result-container {
-  width: 825px;
+  width: 1660px;
   height: 637px;
   display: block;
   margin: 5px;
   border: 2px dashed;
+}
+
+.preview-container {
+  width: 1660px;
+  height: 1125px;
+  margin: 5px;
+  border: 2px dashed;
+  display: flex;
+}
+
+.preview-page {
+  flex: 33.33%;
+  padding: 0px;
 }
